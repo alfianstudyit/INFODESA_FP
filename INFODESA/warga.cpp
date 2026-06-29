@@ -44,6 +44,16 @@ void menuSuratWarga(vector<Surat>& daftarSurat, string usernameActive, string na
         cout << "  " << BOLD << "Pilih Menu: " << RESET;
         cin >> pilihan;
 
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("cls");
+            cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+            system("pause");
+            continue;
+        }
+
         switch (pilihan) {
         case 1: {
             system("cls");
@@ -196,7 +206,7 @@ void menuSuratWarga(vector<Surat>& daftarSurat, string usernameActive, string na
             cout << "  Masukkan ID Surat yang ingin dicetak: ";
             cin >> idCtxt;
 
-            cin.ignore();
+            cin.ignore(); 
             string namaCetak;
             cout << "  Masukkan Nama Lengkap untuk di surat: ";
             getline(cin, namaCetak);
@@ -247,10 +257,7 @@ void menuSuratWarga(vector<Surat>& daftarSurat, string usernameActive, string na
                         bufferHTML << "<p style='text-indent: 40px;'>Yang bertanda tangan di bawah ini, Kepala Desa Infodesa, Kecamatan Godean, Kabupaten Sleman, menerangkan dengan sesungguhnya bahwa:</p>";
 
                         bufferHTML << "<table style='margin-left: 50px; margin-top: 10px; margin-bottom: 10px; width: 85%; font-size: 12pt;'>";
-
-                        // MEMASUKAN NAMA
                         bufferHTML << "<tr><td style='width: 220px; padding: 3px 0;'>Nama Lengkap</td><td style='width: 15px;'>:</td><td><b>" << namaCetak << "</b></td></tr>";
-
                         bufferHTML << "<tr><td style='padding: 3px 0;'>Nomor Induk Kependudukan (NIK)</td><td>:</td><td>" << usernameActive << "</td></tr>";
                         bufferHTML << "<tr><td style='padding: 3px 0;'>Kewarganegaraan</td><td>:</td><td>Indonesia</td></tr>";
                         bufferHTML << "</table>";
@@ -283,7 +290,6 @@ void menuSuratWarga(vector<Surat>& daftarSurat, string usernameActive, string na
                         bufferHTML << "<div style='margin-top: 50px; border-top: 1px dashed gray; padding-top: 10px; font-size: 9pt; color: gray;'>";
                         bufferHTML << "Dokumen ini dicetak secara digital melalui Sistem Infodesa.<br>ID Verifikasi Sistem: <b>ID-" << daftarSurat[i].id << "-DGT</b>";
                         bufferHTML << "</div>";
-
                         bufferHTML << "</div></body></html>";
 
                         // CETAK BUFFER KE 2 FILE
@@ -295,8 +301,12 @@ void menuSuratWarga(vector<Surat>& daftarSurat, string usernameActive, string na
 
                         cout << GREEN << "\n  [SUKSES] Dokumen surat resmi telah dicetak dalam 2 format sekaligus!\n" << RESET;
                         cout << "  1. Format MS Word (.doc) : " << BOLD << namaFileDoc << RESET << "\n";
-                        cout << "  2. Format Website (.html): " << BOLD << namaFileWeb << RESET << "\n\n";
-                        cout << "  Silakan cek folder tujuan untuk membuka berkas Anda.\n\n";
+                        cout << "  2. Format Website (.html): " << BOLD << namaFileWeb << RESET << "\n";
+
+                        // === FITUR PREVIEW DIPANGGIL DI SINI ===
+                        tampilkanPreviewSurat(namaFileWeb);
+
+                        cout << "  Silakan cek folder tujuan untuk membuka berkas asli Anda.\n\n";
                     }
                     else if (daftarSurat[i].status == "Ditolak") {
                         cout << RED << "\n  [INFO] Maaf, pengajuan surat ini DITOLAK oleh perangkat desa.\n";
@@ -328,6 +338,16 @@ void menuPengaduanWarga(vector<Laporan>& daftarLaporan, string usernameActive) {
         cout << "  4. Kembali ke Menu Utama\n\n";
         cout << "  " << BOLD << "Pilih Menu: " << RESET;
         cin >> pilihan;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("cls");
+            cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+            system("pause");
+            continue;
+        }
 
         if (pilihan == 1 || pilihan == 2) {
             system("cls");
@@ -369,4 +389,79 @@ void menuPengaduanWarga(vector<Laporan>& daftarLaporan, string usernameActive) {
             system("pause");
         }
     } while (pilihan != 4);
+}
+
+void tampilkanPreviewSurat(string namaFileWeb) {
+    ifstream fileInput(namaFileWeb.c_str());
+    if (!fileInput.is_open()) {
+        cout << RED << "  [ERROR] Gagal membuka file untuk preview.\n" << RESET;
+        return;
+    }
+
+    cout << YELLOW << BOLD << "\n  =================== PREVIEW DOKUMEN DIGITAL ===================\n" << RESET;
+
+    char ch;
+    string teksBersih = "";
+    bool dalamTag = false;
+    bool dalamHeadAtauStyle = false;
+    string akumulasiTag = "";
+
+    // Baca file karakter demi karakter
+    while (fileInput.get(ch)) {
+        if (ch == '<') {
+            dalamTag = true;
+            akumulasiTag = "<";
+            continue;
+        }
+        if (ch == '>') {
+            dalamTag = false;
+            akumulasiTag += ">";
+
+            // Deteksi tag penutup paragraf, baris, atau tabel untuk memberikan enter di konsol
+            if (akumulasiTag == "<br>" || akumulasiTag == "</p>" || akumulasiTag == "</tr>" || akumulasiTag == "</div>") {
+                teksBersih += "\n";
+            }
+            // Abaikan konten yang berada di dalam tag head atau style
+            if (akumulasiTag == "<head>" || akumulasiTag == "<style>") {
+                dalamHeadAtauStyle = true;
+            }
+            if (akumulasiTag == "</head>" || akumulasiTag == "</style>") {
+                dalamHeadAtauStyle = false;
+            }
+            continue;
+        }
+
+        if (dalamTag) {
+            akumulasiTag += ch;
+        }
+        else {
+            // Jika tidak berada di dalam tag HTML dan bukan di dalam area head/style, ambil teksnya
+            if (!dalamHeadAtauStyle) {
+                teksBersih += ch;
+            }
+        }
+    }
+
+    // Tampilkan hasil ekstraksi teks yang sudah bersih ke terminal
+    // Menggunakan stringstream untuk mencetak baris yang rapi dan menghindari spasi berlebih
+    stringstream ss(teksBersih);
+    string barisCetak;
+    while (getline(ss, barisCetak)) {
+        // Hilangkan baris kosong berlebih atau sisa kode pembatas luar yang tidak perlu
+        if (barisCetak.find("body style=") != string::npos || barisCetak.find("<!DOCTYPE") != string::npos) {
+            continue;
+        }
+
+        // Membersihkan spasi kosong di awal baris agar rata kiri rapi
+        size_t first = barisCetak.find_first_not_of(" \t");
+        if (first != string::npos) {
+            cout << "  " << barisCetak.substr(first) << "\n";
+        }
+        else if (!barisCetak.empty()) {
+            cout << "\n";
+        }
+    }
+
+    cout << YELLOW << BOLD << "  ===============================================================\n\n" << RESET;
+    fileInput.close();
 }

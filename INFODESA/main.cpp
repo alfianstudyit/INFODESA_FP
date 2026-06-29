@@ -95,6 +95,17 @@ int main() {
             if (RoleLogin == PerangkatDesa) {
                 screenPD(namaLogin);
                 cin >> pilihLayanan;
+
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+
+                    system("cls");
+                    cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+                    system("pause");
+                    continue;
+                }
+
                 switch (pilihLayanan) {
                 case 1: menuSuratPD(daftarSurat); break;
                 case 2: menuKependudukanPD(daftarPenduduk); break;
@@ -113,6 +124,17 @@ int main() {
             else if (RoleLogin == Warga) {
                 screenWarga(namaLogin);
                 cin >> pilihLayanan;
+
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+
+                    system("cls");
+                    cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+                    system("pause");
+                    continue;
+                }
+
                 switch (pilihLayanan) {
                 case 1: menuSuratWarga(daftarSurat, usernameLogin, namaLogin); break;
                 case 2: menuPengaduanWarga(daftarLaporan, usernameLogin); break;

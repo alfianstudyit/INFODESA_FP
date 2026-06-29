@@ -438,6 +438,16 @@ void menuKabarDesa(vector<Berita>& daftarBerita, Role roleActive) {
         cout << "  " << BOLD << "Pilih: " << RESET;
         cin >> pilihan;
 
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("cls");
+            cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+            system("pause");
+            continue;
+        }
+
         // 1. LIHAT BERITA (TAMPIL 1 PER 1 DENGAN NAVIGASI)
         if (pilihan == 1) {
             if (daftarBerita.empty()) {
@@ -446,7 +456,7 @@ void menuKabarDesa(vector<Berita>& daftarBerita, Role roleActive) {
                 system("pause");
             }
             else {
-                size_t indexBerita = 0; // Mulai dari berita pertama (paling lama)
+                size_t indexBerita = daftarBerita.size() - 1;
                 // Catatan: Jika ingin berita terbaru muncul duluan, bisa diset: indexBerita = daftarBerita.size() - 1;
 
                 char nav;
@@ -475,6 +485,17 @@ void menuKabarDesa(vector<Berita>& daftarBerita, Role roleActive) {
                     cout << "  [K] Kembali ke Menu Mading\n\n";
                     cout << "  Masukkan Opsi Navigasi: ";
                     cin >> nav;
+
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(10000, '\n');
+
+                        system("cls");
+                        cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+                        system("pause");
+                        continue;
+                    }
+
                     nav = tolower(nav); // Menangani input huruf kapital/kecil
 
                     // Logika Perpindahan Berita
@@ -495,7 +516,7 @@ void menuKabarDesa(vector<Berita>& daftarBerita, Role roleActive) {
             bBaru.id = daftarBerita.size() + 1;
 
             cout << BLUE << BOLD << "\n  >>> PUBLIKASI BERITA BARU <<<\n\n" << RESET;
-            cin.ignore(); // Bersihkan buffer input
+            cin.ignore(); 
 
             cout << "  Judul Berita     : "; getline(cin, bBaru.judul);
             cout << "  Tanggal / Waktu  : "; getline(cin, bBaru.tanggal);
@@ -573,6 +594,16 @@ void menuPengaduanPD(vector<Laporan>& daftarLaporan) {
         cout << "  2. Kembali ke Dashboard\n\n";
         cout << "  " << BOLD << "Pilih Menu: " << RESET;
         cin >> pilihan;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("cls");
+            cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+            system("pause");
+            continue;
+        }
 
         if (pilihan == 1) {
             system("cls");
@@ -653,6 +684,16 @@ void menuKonfirmasiAdminBaru(vector<Users>& daftarUser) {
         cout << "\n  1. Approve Akun\n  2. Kembali\n\n  " << BOLD << "Pilih: " << RESET;
         cin >> pilihan;
 
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("cls");
+            cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+            system("pause");
+            continue;
+        }
+
         if (pilihan == 1) {
             string targetNIK;
             cout << "  Masukkan NIK yang ingin di-approve: ";
@@ -687,6 +728,16 @@ void menuManajemenAkun(vector<Users>& daftarUser, const vector<Penduduk>& daftar
         cout << "  6. Kembali ke Menu Utama\n\n";
         cout << "  " << BOLD << "Pilih Menu (1-6): " << RESET;
         cin >> pilihan;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            system("cls");
+            cout << RED << BOLD << "\n  [ERROR] Input tidak valid! Harap masukkan ANGKA.\n\n" << RESET;
+            system("pause");
+            continue;
+        }
 
         switch (pilihan) {
         case 1: { 
@@ -883,3 +934,4 @@ void menuManajemenAkun(vector<Users>& daftarUser, const vector<Penduduk>& daftar
         }
     } while (pilihan != 6);
 }
+

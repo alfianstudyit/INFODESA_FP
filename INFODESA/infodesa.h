@@ -90,5 +90,6 @@ int binarySearchPenduduk(const vector<Penduduk>& arr, string targetNIK);
 void menuKonfirmasiAdminBaru(vector<Users>& daftarUser);
 void DataDummy(vector<Penduduk>& daftarPenduduk, vector<Users>& daftarUser, vector<Berita>& daftarBerita);
 void menuManajemenAkun(vector<Users>& daftarUser, const vector<Penduduk>& daftarPenduduk, string usernameActive);
+void tampilkanPreviewSurat(string namaFileWeb);
 
 #endif // INFODESA_H
