@@ -1,0 +1,16 @@
+================================================
+          KARCIS ANTREAN LAYANAN DESA           
+================================================
+
+  NOMOR ANTREAN : A-1
+
+  Nama Warga    : alfian
+  Keperluan     : ambil surat
+  Jam Cetak     : 10:30 WIB
+
+------------------------------------------------
+ *NOTE: JIKA DIPANGGIL 3 KALI TIDAK DATANG,
+        MAKA KARCIS DINYATAKAN HANGUS!          
+------------------------------------------------
+      Terima kasih telah tertib mengantre.      
+================================================

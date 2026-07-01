@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="antreanWarga.cpp" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="main.cpp" />

@@ -16,14 +16,9 @@ int main() {
 
     int pilihMenu, pilihLayanan;
 
-    // Default Akun untuk Testing
-    //Users adminPDDefault = { "adminpd", "adminpd", "123", PerangkatDesa, true };
-    //Users adminWDefault = { "adminwarga", "adminw", "123", Warga, true };
-    //daftarUser.push_back(adminWDefault);
-    //daftarUser.push_back(adminPDDefault);
-
-    // Default Berita
-   
+    //antrean wwarga menggunakan queue
+    QueueOnline qDesa;
+    inisialisasi(qDesa);
 
     DataDummy(daftarPenduduk, daftarUser, daftarBerita);
 
@@ -139,9 +134,10 @@ int main() {
                 case 1: menuSuratWarga(daftarSurat, usernameLogin, namaLogin); break;
                 case 2: menuPengaduanWarga(daftarLaporan, usernameLogin); break;
                 case 3: menuKabarDesa(daftarBerita, RoleLogin); break;
-                case 4: menuPanicButton(daftarDarurat, RoleLogin, usernameLogin); break;
-                case 5: Exit = false; break; 
-                case 6: return 0;          
+                case 4: ambilAntreanOnline(qDesa);
+                case 5: menuPanicButton(daftarDarurat, RoleLogin, usernameLogin); break;
+                case 6: Exit = false; break; 
+                case 7: return 0;          
                 default:
                     cout << RED << "\n  [ERROR] Pilihan tidak valid!\n" << RESET;
                     system("pause");

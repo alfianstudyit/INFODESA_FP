@@ -7,7 +7,6 @@
 
 using namespace std;
 
-//MAKRO WARNA
 
 // ENUM & STRUCT
 enum Role {
@@ -73,6 +72,8 @@ struct Darurat {
     string status;
 };
 
+
+
 // PROTOTIPE FUNGSI
 void registrasiUser(vector<Users>& daftarUser, const vector<Penduduk>& daftarPenduduk);
 Role loginUser(const vector<Users>& daftarUser, string& namaLogin, string& usernameLogin);
@@ -91,5 +92,31 @@ void menuKonfirmasiAdminBaru(vector<Users>& daftarUser);
 void DataDummy(vector<Penduduk>& daftarPenduduk, vector<Users>& daftarUser, vector<Berita>& daftarBerita);
 void menuManajemenAkun(vector<Users>& daftarUser, const vector<Penduduk>& daftarPenduduk, string usernameActive);
 void tampilkanPreviewSurat(string namaFileWeb);
+
+
+
+
+//khusus antrean warga
+const int MAX_QUEUE = 10;
+
+struct Antrean {
+    string noTiket;
+    string namaWarga;
+    string keperluan;
+    string waktuDaftar;
+};
+
+struct QueueOnline {
+    int depan;
+    int belakang;
+    Antrean data[MAX_QUEUE];
+};
+
+void inisialisasi(QueueOnline& q);
+bool isEmpty(QueueOnline& q);
+bool isFull(QueueOnline& q);
+void ambilAntreanOnline(QueueOnline& q);
+
+
 
 #endif // INFODESA_H

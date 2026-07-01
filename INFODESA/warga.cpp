@@ -25,9 +25,10 @@ void screenWarga(string nama) {
     cout << CYAN << "  1. " << RESET << "Layanan Surat\n";
     cout << CYAN << "  2. " << RESET << "Layanan Pengaduan\n";
     cout << CYAN << "  3. " << RESET << "Kabar Desa\n";
-    cout << RED << "  4. " << "Panic Button\n" << RESET;
-    cout << YELLOW << "  5. " << RESET << "Logout\n";
-    cout << YELLOW << "  6. " << RESET << "Exit\n\n";
+    cout << CYAN << "  4. " << RESET << "Antrean Online\n";
+    cout << RED << "  5. " << "Panic Button\n" << RESET;
+    cout << YELLOW << "  6. " << RESET << "Logout\n";
+    cout << YELLOW << "  7. " << RESET << "Exit\n\n";
     cout << "  Masukkan pilihan Anda: ";
 }
 
